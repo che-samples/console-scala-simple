@@ -25,6 +25,8 @@ components:
           path: /home/user/.sbt
         - name: ivy2
           path: /home/user/.ivy2
+        - name: cache
+          path: /home/user/.cache
         - name: coursier
           path: /home/user/.cache/coursier
         - name: metals
@@ -37,6 +39,9 @@ components:
     volume:
       size: 1G
   - name: ivy2
+    volume:
+      size: 1G
+  - name: cache
     volume:
       size: 1G
   - name: coursier
