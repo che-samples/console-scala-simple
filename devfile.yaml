@@ -4,7 +4,7 @@ metadata:
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-1e8c2c9
+      image: quay.io/devfile/universal-developer-image:ubi8-0e189d9
       env:
         - name: JDK_JAVA_OPTIONS
           value: >-
@@ -33,59 +33,70 @@ components:
           path: /home/user/.cache/bloop
       memoryLimit: 5Gi
       mountSources: true
+
   - name: sbt
     volume:
       size: 1G
+
   - name: ivy2
     volume:
       size: 1G
+
   - name: cache
     volume:
       size: 1G
+
   - name: coursier
     volume:
       size: 1G
+
   - name: metals
     volume:
       size: 1G
+
   - name: bloop
     volume:
       size: 1G
+
 commands:
   - id: build
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/scala-sbt
+      workingDir: ${PROJECT_SOURCE}
       commandLine: "./sbt +Test/compile"
       group:
         kind: build
         isDefault: true
+
   - id: package
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/scala-sbt
+      workingDir: ${PROJECT_SOURCE}
       commandLine: "./sbt +publishLocal"
       group:
         kind: build
+
   - id: sbt-repl
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/scala-sbt
+      workingDir: ${PROJECT_SOURCE}
       commandLine: "./sbt"
       group:
         kind: run
+
   - id: run
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/scala-sbt
+      workingDir: ${PROJECT_SOURCE}
       commandLine: "./sbt run"
       group:
         kind: run
         isDefault: true
+
   - id: test
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/scala-sbt
+      workingDir: ${PROJECT_SOURCE}
       commandLine: "./sbt +test"
       group:
         kind: run
